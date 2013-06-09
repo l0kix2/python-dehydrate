@@ -51,7 +51,7 @@ class Field(object):
         try:
             self.validate_target_info(target_info)
         except Exception as e:
-            raise SpecParsingError(e.message)
+            raise SpecParsingError(str(e))
 
         return target_info, substitution
 
