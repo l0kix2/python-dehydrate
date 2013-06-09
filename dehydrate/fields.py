@@ -24,9 +24,12 @@ is_pair = lambda val: is_iterable(val) and len(val) == 2
 
 class Field(object):
 
+    _target_info = None
+    _substitution = None
+
     def __init__(self, dehydrator, spec):
         self.dehydrator = dehydrator
-        self.target_info, self.substitution = self.parse_spec(spec=spec)
+        self.spec = spec
 
     @staticmethod
     def is_relevant(spec):
@@ -37,15 +40,27 @@ class Field(object):
         """
         raise NotImplementedError
 
-    def parse_spec(self, spec):
+    @property
+    def target_info(self):
+        if not self._target_info:
+            self._target_info, self._substitution = self.parse_spec()
+        return self._target_info
+
+    @property
+    def substitution(self):
+        if not self._substitution:
+            self._target_info, self._substitution = self.parse_spec()
+        return self._substitution
+
+    def parse_spec(self):
         """
         You should raise SpecParsingError if something goes wrong.
         TODO: Maybe *I* should catch all exceptions and raise SpecParsingError?
         """
-        if is_pair(spec):
-            target_info, substitution = spec
+        if is_pair(self.spec):
+            target_info, substitution = self.spec
         else:
-            target_info = spec
+            target_info = self.spec
             substitution = None
 
         try:
