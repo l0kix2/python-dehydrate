@@ -126,9 +126,7 @@ class ComplexField(Field):
     def is_relevant(spec):
         if is_dict(spec):
             return True
-        if (is_pair(spec) and
-            is_dict(spec[0]) and
-            is_string(spec[1])):
+        if is_pair(spec) and is_dict(spec[0]) and is_string(spec[1]):
             return True
         return False
 
