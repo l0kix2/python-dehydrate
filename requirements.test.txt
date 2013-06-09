@@ -1,4 +1,4 @@
-'pytest'
-'mock'
-'coverage'
-'coveralls'
+pytest
+mock
+coverage
+coveralls
