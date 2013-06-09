@@ -3,7 +3,7 @@ python-dehydrate
 
 Small lib for represent objects as a dicts with primitive python types.
 
-[![Build Status](https://travis-ci.org/l0kix2/python-dehydrate.png)](https://travis-ci.org/l0kix2/YOUR_PROJECT_NAME)
+[![Build Status](https://travis-ci.org/l0kix2/python-dehydrate.png)](https://travis-ci.org/l0kix2/python-dehydrate)
 
 
 
