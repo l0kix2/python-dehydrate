@@ -9,11 +9,9 @@ new field types.
 from __future__ import unicode_literals
 
 from collections import Iterable, Mapping
-from functools import partial
-from operator import attrgetter
 
 from .helpers import Registry
-from .exceptions import SpecParsingError
+from .exceptions import DehydrationException, SpecParsingError
 
 registry = Registry()
 
@@ -28,7 +26,7 @@ class Field(object):
 
     def __init__(self, dehydrator, spec):
         self.dehydrator = dehydrator
-        self.target_info, self.substitution = self.parse_spec(spec)
+        self.target_info, self.substitution = self.parse_spec(spec=spec)
 
     @staticmethod
     def is_relevant(spec):
@@ -78,7 +76,9 @@ class Field(object):
             if callable(object_attribute):
                 return object_attribute
             else:
-                return partial(attrgetter(object_attribute), obj)
+                return lambda: object_attribute
+
+        raise DehydrationException("Can't resolve target %s" % target_name)
 
 
 @registry.register
