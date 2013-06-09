@@ -7,7 +7,7 @@ import pytest
 from dehydrate.fields import Field, SimpleField, ComplexField
 from dehydrate.exceptions import DehydrationException, SpecParsingError
 
-from . import Initer
+from .. import Initer
 
 
 def test_parse_spec_with_one_element_spec():

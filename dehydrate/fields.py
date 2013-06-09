@@ -1,8 +1,8 @@
 # coding: utf-8
 """
-This module contains fields classes. Each of them knows about structures which
-they can manipulate and how to fetch key and value for using in dehydrating
-process.
+This module contains fields classes. Each of them knows about structures
+which they can manipulate and how to fetch key and value for using in
+dehydrating process.
 This classes separated from Dehydrator class for ease of extending and adding
 new field types.
 """
@@ -55,7 +55,6 @@ class Field(object):
     def parse_spec(self):
         """
         You should raise SpecParsingError if something goes wrong.
-        TODO: Maybe *I* should catch all exceptions and raise SpecParsingError?
         """
         if is_pair(self.spec):
             target_info, substitution = self.spec
@@ -116,7 +115,6 @@ class SimpleField(Field):
         return target_getter(obj)
 
 
-
 @registry.register
 class ComplexField(Field):
 
@@ -154,7 +152,6 @@ class ComplexField(Field):
             return map(dehydrator.dehydrate, target)
         else:
             return dehydrator.dehydrate(obj)
-
 
     @property
     def target(self):
