@@ -7,5 +7,5 @@ setup(
     name='dehydrate',
     version='0.1dev',
     packages=find_packages(),
-    tests_require=['pytest', 'mock']
+    tests_require=['pytest', 'mock', 'pytest-cov', 'coveralls']
 )
