@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 from collections import Iterable, Mapping
 
 from .helpers import Registry
-from .exceptions import DehydrationException, SpecParsingError
+from .exceptions import DehydrationException
 
 registry = Registry()
 
@@ -65,7 +65,7 @@ class Field(object):
         try:
             self.validate_target_info(target_info)
         except Exception as e:
-            raise SpecParsingError(str(e))
+            raise DehydrationException(description=str(e))
 
         return target_info, substitution
 
@@ -136,7 +136,7 @@ class ComplexField(Field):
                 "'{field_name}' field is required in specification "
                 "of {class_name}"
             )
-            raise SpecParsingError(message=message.format(
+            raise DehydrationException(description=message.format(
                 field_name=self.TARGET_FIELD_NAME,
                 class_name=self.__class__.__name__,
             ))
