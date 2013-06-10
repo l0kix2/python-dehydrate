@@ -11,7 +11,7 @@ class TestDehydrator(Dehydrator):
 
 
 def test_dehydrator_init():
-    assert Dehydrator().fields is ()
+    assert Dehydrator().fields == ()
     assert TestDehydrator().fields == ('name', 'age',)
     assert Dehydrator(fields=('name', 'login')).fields == ('name', 'login')
 
