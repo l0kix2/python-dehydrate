@@ -9,7 +9,7 @@ python:
 
 install:
   - pip install -r requirements.test.txt --use-mirrors
-  - python setup.py develop
+  - pip install .
 
 script:
   - coverage run --source=dehydrate setup.py test
