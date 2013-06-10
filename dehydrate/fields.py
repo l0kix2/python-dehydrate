@@ -112,7 +112,7 @@ class SimpleField(Field):
 
     def build_value(self, obj):
         target_getter = self.resolve_target(obj=obj, target_name=self.target)
-        return target_getter(obj)
+        return target_getter()
 
 
 @registry.register
@@ -130,20 +130,21 @@ class ComplexField(Field):
             return True
         return False
 
-    def validate_target_info(self, target_info):
-        if not self.TARGET_FIELD_NAME in target_info:
+    @classmethod
+    def validate_target_info(cls, target_info):
+        if not cls.TARGET_FIELD_NAME in target_info:
             message = (
                 "'{field_name}' field is required in specification "
                 "of {class_name}"
             )
             raise DehydrationException(description=message.format(
-                field_name=self.TARGET_FIELD_NAME,
-                class_name=self.__class__.__name__,
+                field_name=cls.TARGET_FIELD_NAME,
+                class_name=cls.__class__.__name__,
             ))
 
     def build_value(self, obj):
         target_getter = self.resolve_target(obj=obj, target_name=self.target)
-        target = target_getter(obj)
+        target = target_getter()
 
         dehydrator = self.dehydrator_cls(fields=self.fields)
         if self.is_iterable:
