@@ -12,11 +12,12 @@ from collections import Iterable, Mapping
 
 from .helpers import Registry
 from .exceptions import DehydrationException
+from ._compat import string_types
 
 registry = Registry()
 
 # some handy shortcuts
-is_string = lambda val: isinstance(val, basestring)
+is_string = lambda val: isinstance(val, string_types)
 is_dict = lambda val: isinstance(val, Mapping)
 is_iterable = lambda val: isinstance(val, Iterable)
 is_pair = lambda val: is_iterable(val) and len(val) == 2
