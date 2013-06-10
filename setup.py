@@ -23,6 +23,7 @@ setup(
     name='dehydrate',
     version='0.1dev',
     packages=find_packages(),
+    setup_requires=['six'],
     tests_require=['pytest', 'mock', 'coverage', 'coveralls'],
     cmdclass={'test': PyTest},
 )
