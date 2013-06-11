@@ -88,7 +88,7 @@ def test_build_value_for_not_iterable():
 
     field.build_value(obj=None)
 
-    dehydrator.dehydrate.assert_called_once_with(None)
+    dehydrator.dehydrate.assert_called_once_with('x')
 
 
 def test_build_value_for_iterable():

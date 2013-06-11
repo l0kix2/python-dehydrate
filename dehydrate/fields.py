@@ -151,7 +151,7 @@ class ComplexField(Field):
         if self.is_iterable:
             return map(dehydrator.dehydrate, target)
         else:
-            return dehydrator.dehydrate(obj)
+            return dehydrator.dehydrate(target)
 
     @property
     def target(self):
