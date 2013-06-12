@@ -13,6 +13,8 @@ class PyTest(TestCommand):
         self.test_args = [
             '--pep8',
             '--clearcache',
+            '--doctest-glob=*.rst',
+            # '--doctest-modules',
         ]
         self.test_suite = True
 
