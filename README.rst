@@ -50,6 +50,15 @@ dict? Just specify both strings in fields.::
     [('login', 'iron_man'), ('name', 'Tony')]
 
 
+Installation
+============
+Simple ``pip install dehydrate`` must be fine.
+
+Requirements
+------------
+* six
+
+
 Philosophy
 ==========
   * Easy things should be done easily.
