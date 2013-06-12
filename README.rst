@@ -9,8 +9,22 @@ python-dehydrate
 Small lib for representing python objects as a dicts.
 
 
+Motivation
+==========
+Why would you need library like this? One of obvious use cases is to prepare
+data for serializing (into json/yaml/xml/pickle/whatever). You can control
+dehydration process by describing how to fetch values from object and how to
+present it in dehydrated structure using simple syntax.
+
+
 Examples
 ========
+
+
+Philosophy
+==========
+  * Easy things should be done easily.
+  * Complex things must be possible.
 
 
 Testing
@@ -35,3 +49,11 @@ should always be 100%. Refer to Testing_ section for more instructions.
 Let me speak from my heart :). I will be very glad, if you correct my clumsy
 english phrases in docs and docstings or even advise more appropriate names
 for variables in code.
+
+
+TODO
+====
+  * Think about giving opportunity to put results in Ordered dict instead of
+  simple dict.
+  * Add functionality for converting all values of some type using handlers on
+  dehydrator class.
