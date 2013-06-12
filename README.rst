@@ -24,6 +24,7 @@ Simple case
 In simplest of possible cases you just want get object, list wanted attributes
 and get mapping with keys based on attribute names and values from them.
 Use ``dehydrate`` shortcut for this case.::
+
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
@@ -38,6 +39,7 @@ Some notes:
 
 But what if you want put ``first_name`` attribute in ``name`` key of resulted
 dict? Just specify both strings in fields.::
+
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
