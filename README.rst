@@ -54,6 +54,6 @@ for variables in code.
 TODO
 ====
   * Think about giving opportunity to put results in Ordered dict instead of
-  simple dict.
+    simple dict.
   * Add functionality for converting all values of some type using handlers on
-  dehydrator class.
+    dehydrator class.
