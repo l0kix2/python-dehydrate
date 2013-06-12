@@ -23,28 +23,28 @@ Simple case
 -----------
 In simplest of possible cases you just want get object, list wanted attributes
 and get mapping with keys based on attribute names and values from them.
-Use ``dehydrate`` shortcut for this case.
->>> from dehydrate import dehydrate
->>> from examples import Person
->>> iron_man = Person(first_name='Tony', login='iron_man')
->>> dehydrated = dehydrate(obj=iron_man, fields=('first_name', 'login'))
->>> sorted(dehydrated.items())
-[('first_name', 'Tony'), ('login', 'iron_man')]
+Use ``dehydrate`` shortcut for this case.::
+    >>> from dehydrate import dehydrate
+    >>> from examples import Person
+    >>> iron_man = Person(first_name='Tony', login='iron_man')
+    >>> dehydrated = dehydrate(obj=iron_man, fields=('first_name', 'login'))
+    >>> sorted(dehydrated.items())
+    [('first_name', 'Tony'), ('login', 'iron_man')]
 
 * I use list representation of dict in examples because it has predictable
 order of items in it.
 
 But what if you want put ``first_name`` attribute in ``name`` key of resulted
-dict? Just specify both strings in fields.
->>> from dehydrate import dehydrate
->>> from examples import Person
->>> iron_man = Person(first_name='Tony', login='iron_man')
->>> dehydrated = dehydrate(obj=iron_man, fields=(
-...     ('first_name', 'name'),
-...     'login',
-... ))
->>> sorted(dehydrated.items())
-[('login', 'iron_man'), ('name', 'Tony')]
+dict? Just specify both strings in fields.::
+    >>> from dehydrate import dehydrate
+    >>> from examples import Person
+    >>> iron_man = Person(first_name='Tony', login='iron_man')
+    >>> dehydrated = dehydrate(obj=iron_man, fields=(
+    ...     ('first_name', 'name'),
+    ...     'login',
+    ... ))
+    >>> sorted(dehydrated.items())
+    [('login', 'iron_man'), ('name', 'Tony')]
 
 
 Philosophy
