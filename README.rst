@@ -1,13 +1,12 @@
 python-dehydrate
 ================
-
-Small lib for representing python objects as a dicts.
-
 .. image:: https://travis-ci.org/l0kix2/python-dehydrate.png?branch=master
-    :target: https://travis-ci.org/l0kix2/python-dehydrate?branch=master..
+    :target: https://travis-ci.org/l0kix2/python-dehydrate?branch=master
 
 .. image:: https://coveralls.io/repos/l0kix2/python-dehydrate/badge.png?branch=master
     :target: https://coveralls.io/r/l0kix2/python-dehydrate?branch=master
+
+Small lib for representing python objects as a dicts.
 
 
 Examples
@@ -16,7 +15,7 @@ Examples
 
 Testing
 =======
-Test written with use of `pytest`_ library with neat `pytest pep8 plugin`_.
+Test written with use of `pytest`_ library and neat `pytest pep8 plugin`_.
 You should run ``python setup.py test`` for running full test suite or
 ``coverage run --source=dehydrate setup.py test`` for tests with coverage.
 Tests automatically runs at `Travis CI`_.
