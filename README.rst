@@ -24,7 +24,6 @@ Simple case
 In simplest of possible cases you just want get object, list wanted attributes
 and get mapping with keys based on attribute names and values from them.
 Use ``dehydrate`` shortcut for this case.::
-.. code:: python
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
@@ -32,13 +31,13 @@ Use ``dehydrate`` shortcut for this case.::
     >>> sorted(dehydrated.items())
     [('first_name', 'Tony'), ('login', 'iron_man')]
 
-  * I use list representation of dict in examples because it has predictable
+Some notes:
+  - I use list representation of dict in examples because it has predictable
     order of items in it.
-  * In docs will refer to ``examples`` package, which you can find in repo.
+  - In docs I will refer to ``examples`` package, which you can find in repo.
 
 But what if you want put ``first_name`` attribute in ``name`` key of resulted
 dict? Just specify both strings in fields.::
-.. code:: python
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
@@ -52,8 +51,8 @@ dict? Just specify both strings in fields.::
 
 Philosophy
 ==========
-  * Easy things should be done easily.
-  * Complex things must be possible.
+* Easy things should be done easily.
+* Complex things must be possible.
 
 
 Testing
@@ -83,7 +82,7 @@ for variables in code.
 
 TODO
 ====
-  * Think about giving opportunity to put results in Ordered dict instead of
-    simple dict.
-  * Add functionality for converting all values of some type using handlers on
-    dehydrator class.
+* Think about giving opportunity to put results in Ordered dict instead of 
+  simple dict.
+* Add functionality for converting all values of some type using handlers on
+  dehydrator class.
