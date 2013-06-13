@@ -33,8 +33,9 @@ Use ``dehydrate`` shortcut for this case.::
     [('first_name', 'Tony'), ('login', 'iron_man')]
 
 Some notes:
+
 - I use list representation of dict in examples because it has predictable
-    order of items in it.
+  order of items in it.
 - In docs I will refer to ``examples`` package, which you can find in repo.
 
 If requested attribute name resolves to method of object, then result of
@@ -114,6 +115,7 @@ dehydrate complex fields on object.::
 Second spec in ``fields`` is so-called ``ComplexField``, it described by
 mapping with one required key ``target``, which describes how to get value for
 serialization. Other acceptable keys are:
+
 - ``dehydrator`` -- class, which can be used for dehydrating of complex target.
 - ``fields`` -- iterable of same structure as described above.
 - ``iterable`` -- flag, which specifies should target be handled as iterable.
@@ -171,5 +173,5 @@ TODO
   dehydrator class.
 * Rename fields in specs for minimal confusing in terms.
 * Review tests, because now they not very maintainable. Use examples like in
-readme.
+  readme.
 * Add comprehensive about everything.
