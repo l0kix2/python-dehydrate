@@ -131,7 +131,7 @@ must be fine.
 
 Requirements
 ------------
-* six
+* six (did I mentioned python 3 support? We have one.)
 
 
 Philosophy
