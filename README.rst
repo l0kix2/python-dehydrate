@@ -23,7 +23,7 @@ Simple cases
 ------------
 In simplest of possible cases you just want get object, list wanted attributes
 and get mapping with keys based on attribute names and values from them.
-Use ``dehydrate`` shortcut for this case.::
+Use ``dehydrate`` shortcut for this case::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person
@@ -40,7 +40,7 @@ Some notes:
 
 If requested attribute name resolves to method of object, then result of
 calling it will be set in dehydrated dict. In ``Person`` class we have method
-``full_name``, so lat's try to get its return value.::
+``full_name``, so lat's try to get its return value::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person
@@ -94,7 +94,7 @@ or by passing argument into its ``__init__`` method.
 Recursive dehydration
 ---------------------
 The most valuable feature of lib is that you can describe how to recursively
-dehydrate complex fields on object.::
+dehydrate complex fields on object::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person, PersonDehydrator
