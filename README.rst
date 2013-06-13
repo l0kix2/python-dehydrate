@@ -116,9 +116,9 @@ Second spec in ``fields`` is so-called ``ComplexField``, it described by
 mapping with one required key ``target``, which describes how to get value for
 serialization. Other acceptable keys are:
 
-- ``dehydrator`` -- class, which can be used for dehydrating of complex target.
-- ``fields`` -- iterable of same structure as described above.
-- ``iterable`` -- flag, which specifies should target be handled as iterable.
+- ``dehydrator`` — class, which can be used for dehydrating of complex target.
+- ``fields`` — iterable of same structure as described above.
+- ``iterable`` — flag, which specifies should target be handled as iterable.
 
 
 Installation
