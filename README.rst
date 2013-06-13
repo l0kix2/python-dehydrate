@@ -19,8 +19,8 @@ present it in dehydrated structure using simple syntax.
 
 Examples
 ========
-Simple case
------------
+Simple cases
+------------
 In simplest of possible cases you just want get object, list wanted attributes
 and get mapping with keys based on attribute names and values from them.
 Use ``dehydrate`` shortcut for this case.::
@@ -33,12 +33,24 @@ Use ``dehydrate`` shortcut for this case.::
     [('first_name', 'Tony'), ('login', 'iron_man')]
 
 Some notes:
-  - I use list representation of dict in examples because it has predictable
+- I use list representation of dict in examples because it has predictable
     order of items in it.
-  - In docs I will refer to ``examples`` package, which you can find in repo.
+- In docs I will refer to ``examples`` package, which you can find in repo.
+
+If requested attribute name resolves to method of object, then result of
+calling it will be set in dehydrated dict. In ``Person`` class we have method
+``full_name``, so lat's try to get its return value.::
+
+    >>> from dehydrate import dehydrate
+    >>> from examples import Person
+    >>> iron_man = Person(first_name='Tony', last_name='Stark')
+    >>> dehydrated = dehydrate(obj=iron_man, fields=('full_name',))
+    >>> sorted(dehydrated.items())
+    [('full_name', 'Tony Stark')]
 
 But what if you want put ``first_name`` attribute in ``name`` key of resulted
-dict? Just specify both strings in fields.::
+dict? Just specify both strings in fields. (I will refer to this description
+of a field as a *spec* (which can be one object or two-tuple))::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person
@@ -50,10 +62,70 @@ dict? Just specify both strings in fields.::
     >>> sorted(dehydrated.items())
     [('login', 'iron_man'), ('name', 'Tony')]
 
+Second argument always be used as a key if exists in spec.
+
+
+More complex cases
+------------------
+Sometimes you will want to add some value in dehydrated dict, which is not
+attribute of dehydrated object. Or you may want not use attribute and add some
+another handling for this field instead. In our example we creating
+special class for this called ``PersonDehydrator`` (inherited from
+``dehydrate.Dehydrator``) and set some methods on it::
+
+    >>> from examples import Person, PersonDehydrator
+    >>> iron_man = Person(password='iRon42', login='iron_man')
+    >>> dehydrated = PersonDehydrator(fields=(
+    ...     'password',
+    ...     ('superhero_status', 'is_superhero'),
+    ... )).dehydrate(obj=iron_man)
+    >>> sorted(dehydrated.items())
+    [('is_superhero', True), ('password', '******')]
+
+In example you can see, that object has ``password`` attribute, but
+``PersonDehydrator``'s ``get_password`` used for ``password`` spec. Also you can
+mention, that result of calling ``get_superhero_status`` was set in key
+``is_superhero`` because of second item in spec was declared.
+You can declare list of spec (``fields``) using attribute of dehydrator class
+or by passing argument into its ``__init__`` method.
+
+
+Recursive dehydration
+---------------------
+The most valuable feature of lib is that you can describe how to recursively
+dehydrate complex fields on object.::
+
+    >>> from dehydrate import dehydrate
+    >>> from examples import Person, PersonDehydrator
+    >>> octopus = Person(login='octopus')
+    >>> spider_man = Person(login='spidey', archenemy=octopus)
+    >>> dehydrated = dehydrate(
+    ...     fields=(
+    ...         'login',
+    ...         {'target': 'archenemy', 'fields': ('login',)}
+    ...     ),
+    ...     obj=spider_man
+    ... )
+    >>> dehydrated['login']
+    'spidey'
+    >>> list(dehydrated['archenemy'].items())
+    [('login', 'octopus')]
+
+Second spec in ``fields`` is so-called ``ComplexField``, it described by
+mapping with one required key ``target``, which describes how to get value for
+serialization. Other acceptable keys are:
+- ``dehydrator`` -- class, which can be used for dehydrating of complex target.
+- ``fields`` -- iterable of same structure as described above.
+- ``iterable`` -- flag, which specifies should target be handled as iterable.
+
 
 Installation
 ============
-Simple ``pip install dehydrate`` must be fine.
+Simple::
+
+ pip install dehydrate
+
+must be fine.
 
 Requirements
 ------------
@@ -97,3 +169,7 @@ TODO
   simple dict.
 * Add functionality for converting all values of some type using handlers on
   dehydrator class.
+* Rename fields in specs for minimal confusing in terms.
+* Review tests, because now they not very maintainable. Use examples like in
+readme.
+* Add comprehensive about everything.

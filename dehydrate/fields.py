@@ -20,7 +20,7 @@ registry = Registry()
 is_string = lambda val: isinstance(val, six.string_types)
 is_dict = lambda val: isinstance(val, Mapping)
 is_iterable = lambda val: isinstance(val, Iterable)
-is_pair = lambda val: is_iterable(val) and len(val) == 2
+is_pair = lambda val: not is_dict(val) and is_iterable(val) and len(val) == 2
 
 
 class Field(object):
@@ -84,15 +84,17 @@ class Field(object):
         # try to find getter method on dehydrator at first
         dehydrator_getter_name = self.dehydrator.GETTER_PREFIX + target_name
         if hasattr(self.dehydrator, dehydrator_getter_name):
-            return getattr(self.dehydrator, dehydrator_getter_name)
+            getter = getattr(self.dehydrator, dehydrator_getter_name)
+            return getter(obj)
 
         if hasattr(obj, target_name):
             object_attribute = getattr(obj, target_name)
             if callable(object_attribute):
-                return object_attribute
+                return object_attribute()
             else:
-                return lambda: object_attribute
+                return object_attribute
 
+        # TODO: more detailed exception
         raise DehydrationException("Can't resolve target %s" % target_name)
 
 
@@ -112,8 +114,7 @@ class SimpleField(Field):
         return self.target_info
 
     def build_value(self, obj):
-        target_getter = self.resolve_target(obj=obj, target_name=self.target)
-        return target_getter()
+        return self.resolve_target(obj=obj, target_name=self.target)
 
 
 @registry.register
@@ -144,8 +145,7 @@ class ComplexField(Field):
             ))
 
     def build_value(self, obj):
-        target_getter = self.resolve_target(obj=obj, target_name=self.target)
-        target = target_getter()
+        target = self.resolve_target(obj=obj, target_name=self.target)
 
         dehydrator = self.dehydrator_cls(fields=self.fields)
         if self.is_iterable:

@@ -78,7 +78,7 @@ def test_field_property():
 
 def test_build_value_for_not_iterable():
     field = ComplexField(dehydrator=None, spec=None)
-    field.resolve_target = Mock(return_value=lambda: 'x')
+    field.resolve_target = Mock(return_value='x')
     dehydrator = Mock()
     dehydrator_cls = Mock(return_value=dehydrator)
     field._target_info = {
@@ -93,7 +93,7 @@ def test_build_value_for_not_iterable():
 
 def test_build_value_for_iterable():
     field = ComplexField(dehydrator=None, spec=None)
-    field.resolve_target = Mock(return_value=lambda: ['a', 'b'])
+    field.resolve_target = Mock(return_value=['a', 'b'])
     dehydrator = Mock()
     dehydrator_cls = Mock(return_value=dehydrator)
     field._target_info = {

@@ -29,8 +29,6 @@ def test_target_property():
 
 def test_build_value():
     field = SimpleField(dehydrator=None, spec=None)
-    field.resolve_target = Mock(
-        return_value=lambda: 'x'
-    )
+    field.resolve_target = Mock(return_value='x')
 
     assert field.build_value(obj=None) == 'x'

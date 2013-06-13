@@ -37,17 +37,19 @@ def test_parse_spec_with_failing_validation():
         field.parse_spec()
 
 
-def test_resolve_target_dehydrator_getter():
-    dehydrator = Mock(**{
-        'GETTER_PREFIX': 'get_',
-        'get_username': lambda: 'batman',
-    })
-    field = Field(dehydrator=dehydrator, spec='username')
+def test_resolve_target_with_dehydrator_getter():
+    class TestDehydrator(object):
+        GETTER_PREFIX = 'get_'
+
+        def get_username(self, obj):
+            return 'batman'
+
+    field = Field(dehydrator=TestDehydrator(), spec='username')
     obj = Initer(username='joker')
 
-    getter = field.resolve_target(obj=obj, target_name='username')
+    target = field.resolve_target(obj=obj, target_name='username')
 
-    assert getter() == 'batman'
+    assert target == 'batman'
 
 
 def test_resolve_target_object_attribute():
@@ -55,9 +57,9 @@ def test_resolve_target_object_attribute():
     field.dehydrator = Initer(GETTER_PREFIX='get_')
     obj = Initer(username='joker')
 
-    getter = field.resolve_target(obj=obj, target_name='username')
+    target = field.resolve_target(obj=obj, target_name='username')
 
-    assert getter() == 'joker'
+    assert target == 'joker'
 
 
 def test_resolve_target_object_method():
@@ -65,9 +67,9 @@ def test_resolve_target_object_method():
     field.dehydrator = Initer(GETTER_PREFIX='get_')
     obj = Mock(**{'username.return_value': 'joker'})
 
-    getter = field.resolve_target(obj=obj, target_name='username')
+    target = field.resolve_target(obj=obj, target_name='username')
 
-    assert getter() == 'joker'
+    assert target == 'joker'
 
 
 def test_resolve_target_cant_be_resolved():
