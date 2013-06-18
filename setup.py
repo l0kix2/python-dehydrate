@@ -28,7 +28,7 @@ readme_text = open('README.rst').read()
 changelog_text = open('CHANGELOG.rst').read()
 setup(
     name='dehydrate',
-    version='0.1.2',
+    version='0.1.3',
     packages=['dehydrate'],
     url='https://github.com/l0kix2/python-dehydrate',
     license='MIT',
@@ -36,7 +36,8 @@ setup(
     author_email='l0kix2@gmail.com',
     description='Small lib for representing python objects as a dicts',
     long_description=readme_text + '\n\n' + changelog_text,
-    setup_requires=['six'],
+    setup_requires=['distribute'],
+    install_requires=['six'],
     tests_require=['pytest', 'mock', 'coverage', 'coveralls'],
     cmdclass={'test': PyTest},
     classifiers=[
