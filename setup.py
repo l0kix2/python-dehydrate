@@ -36,7 +36,6 @@ setup(
     author_email='l0kix2@gmail.com',
     description='Small lib for representing python objects as a dicts',
     long_description=readme_text + '\n\n' + changelog_text,
-    setup_requires=['distribute'],
     install_requires=['six'],
     tests_require=['pytest', 'mock', 'coverage', 'coveralls'],
     cmdclass={'test': PyTest},
