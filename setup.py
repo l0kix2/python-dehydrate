@@ -28,7 +28,7 @@ readme_text = open('README.rst').read()
 changelog_text = open('CHANGELOG.rst').read()
 setup(
     name='dehydrate',
-    version='0.1.4',
+    version='0.2.0',
     packages=['dehydrate'],
     url='https://github.com/l0kix2/python-dehydrate',
     license='MIT',
