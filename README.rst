@@ -11,8 +11,9 @@ Small lib for representing python objects as a dicts.
 
 Motivation
 ==========
-Why would you need library like this? One of obvious use cases is to prepare
-data for serializing (into json/yaml/xml/pickle/whatever). You can control
+Why would you need library like this? One of obvious use cases is to convert
+complex objects with methods, lots of atributes and so on into dicts for
+serializing (into json/yaml/xml/pickle/whatever). You can control
 dehydration process by describing how to fetch values from object and how to
 present it in dehydrated structure using simple syntax.
 
@@ -35,12 +36,12 @@ Use ``dehydrate`` shortcut for this case::
 Some notes:
 
 - I use list representation of dict in examples because it has predictable
-  order of items in it.
+  order of items in it. It's important, because this pieces of code are tests.
 - In docs I will refer to ``examples`` package, which you can find in repo.
 
 If requested attribute name resolves to method of object, then result of
 calling it will be set in dehydrated dict. In ``Person`` class we have method
-``full_name``, so lat's try to get its return value::
+``full_name``, so let's try to get its return value::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person
@@ -50,8 +51,8 @@ calling it will be set in dehydrated dict. In ``Person`` class we have method
     [('full_name', 'Tony Stark')]
 
 But what if you want put ``first_name`` attribute in ``name`` key of resulted
-dict? Just specify both strings in ``specs``. (*spec* can be one object or
-two-tuple))::
+dict? Just specify both strings in ``specs`` (*spec* can be one object or
+two-tuple)::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person
@@ -171,6 +172,7 @@ TODO
   simple dict.
 * Add functionality for converting all values of some type using handlers on
   dehydrator class.
-* Review tests, because now they not very maintainable. Use examples like in
-  readme.
-* Add comprehensive about everything.
+* Review tests, because now they not very maintainable. Use sane examples like
+  in readme.
+* Add comprehensive docs about everything.
+* Maybe move complex examples with classes into docs from readme.
