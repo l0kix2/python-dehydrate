@@ -28,7 +28,7 @@ Use ``dehydrate`` shortcut for this case::
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
-    >>> dehydrated = dehydrate(obj=iron_man, fields=('first_name', 'login'))
+    >>> dehydrated = dehydrate(obj=iron_man, specs=('first_name', 'login'))
     >>> sorted(dehydrated.items())
     [('first_name', 'Tony'), ('login', 'iron_man')]
 
@@ -45,18 +45,18 @@ calling it will be set in dehydrated dict. In ``Person`` class we have method
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', last_name='Stark')
-    >>> dehydrated = dehydrate(obj=iron_man, fields=('full_name',))
+    >>> dehydrated = dehydrate(obj=iron_man, specs=('full_name',))
     >>> sorted(dehydrated.items())
     [('full_name', 'Tony Stark')]
 
 But what if you want put ``first_name`` attribute in ``name`` key of resulted
-dict? Just specify both strings in fields. (I will refer to this description
-of a field as a *spec* (which can be one object or two-tuple))::
+dict? Just specify both strings in ``specs``. (*spec* can be one object or
+two-tuple))::
 
     >>> from dehydrate import dehydrate
     >>> from examples import Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
-    >>> dehydrated = dehydrate(obj=iron_man, fields=(
+    >>> dehydrated = dehydrate(obj=iron_man, specs=(
     ...     ('first_name', 'name'),
     ...     'login',
     ... ))
@@ -70,13 +70,13 @@ More complex cases
 ------------------
 Sometimes you will want to add some value in dehydrated dict, which is not
 attribute of dehydrated object. Or you may want not use attribute and add some
-another handling for this field instead. In our example we creating
+another handling for this element instead. In our example we creating
 special class for this called ``PersonDehydrator`` (inherited from
 ``dehydrate.Dehydrator``) and set some methods on it::
 
     >>> from examples import Person, PersonDehydrator
     >>> iron_man = Person(password='iRon42', login='iron_man')
-    >>> dehydrated = PersonDehydrator(fields=(
+    >>> dehydrated = PersonDehydrator(specs=(
     ...     'password',
     ...     ('superhero_status', 'is_superhero'),
     ... )).dehydrate(obj=iron_man)
@@ -87,7 +87,7 @@ In example you can see, that object has ``password`` attribute, but
 ``PersonDehydrator``'s ``get_password`` used for ``password`` spec. Also you can
 mention, that result of calling ``get_superhero_status`` was set in key
 ``is_superhero`` because of second item in spec was declared.
-You can declare list of spec (``fields``) using attribute of dehydrator class
+You can declare ``specs`` using attribute of dehydrator class
 or by passing argument into its ``__init__`` method.
 
 
@@ -101,9 +101,9 @@ dehydrate complex fields on object::
     >>> octopus = Person(login='octopus')
     >>> spider_man = Person(login='spidey', archenemy=octopus)
     >>> dehydrated = dehydrate(
-    ...     fields=(
+    ...     specs=(
     ...         'login',
-    ...         {'target': 'archenemy', 'fields': ('login',)}
+    ...         {'target': 'archenemy', 'specs': ('login',)}
     ...     ),
     ...     obj=spider_man
     ... )
@@ -112,12 +112,12 @@ dehydrate complex fields on object::
     >>> list(dehydrated['archenemy'].items())
     [('login', 'octopus')]
 
-Second spec in ``fields`` is so-called ``ComplexField``, it described by
+Second spec in ``specs`` is so-called ``ComplexSpec``, it described by
 mapping with one required key ``target``, which describes how to get value for
 serialization. Other acceptable keys are:
 
 - ``dehydrator`` — class, which can be used for dehydrating of complex target.
-- ``fields`` — iterable of same structure as described above.
+- ``specs`` — iterable of same structure as described above.
 - ``iterable`` — flag, which specifies should target be handled as iterable.
 
 
@@ -171,7 +171,6 @@ TODO
   simple dict.
 * Add functionality for converting all values of some type using handlers on
   dehydrator class.
-* Rename fields in specs for minimal confusing in terms.
 * Review tests, because now they not very maintainable. Use examples like in
   readme.
 * Add comprehensive about everything.

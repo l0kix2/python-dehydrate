@@ -11,7 +11,7 @@ def test_dehydrate_shortcut_using_given_cls():
 
     dehydrate(obj=None, cls=fake_dehydrator_cls)
 
-    fake_dehydrator_cls.assert_called_once_with(fields=None)
+    fake_dehydrator_cls.assert_called_once_with(specs=None)
 
 
 def test_dehydrate_shortcut_using_given_obj():

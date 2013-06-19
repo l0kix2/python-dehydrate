@@ -1,10 +1,10 @@
 # coding: utf-8
 """
-This module contains fields classes. Each of them knows about structures
+This module contains specs classes. Each of them knows about structures
 which they can manipulate and how to fetch key and value for using in
 dehydrating process.
 This classes separated from Dehydrator class for ease of extending and adding
-new field types.
+new spec types.
 """
 from __future__ import unicode_literals
 
@@ -23,7 +23,7 @@ is_iterable = lambda val: isinstance(val, Iterable)
 is_pair = lambda val: not is_dict(val) and is_iterable(val) and len(val) == 2
 
 
-class Field(object):
+class Spec(object):
 
     _target_info = None
     _substitution = None
@@ -99,7 +99,7 @@ class Field(object):
 
 
 @registry.register
-class SimpleField(Field):
+class SimpleSpec(Spec):
 
     @staticmethod
     def is_relevant(spec):
@@ -118,7 +118,7 @@ class SimpleField(Field):
 
 
 @registry.register
-class ComplexField(Field):
+class ComplexSpec(Spec):
 
     TARGET_FIELD_NAME = 'target'
     ITERABLE_FLAG_FIELD_NAME = 'iterable'
@@ -147,7 +147,7 @@ class ComplexField(Field):
     def build_value(self, obj):
         target = self.resolve_target(obj=obj, target_name=self.target)
 
-        dehydrator = self.dehydrator_cls(fields=self.fields)
+        dehydrator = self.dehydrator_cls(specs=self.specs)
         if self.is_iterable:
             return map(dehydrator.dehydrate, target)
         else:
@@ -167,5 +167,5 @@ class ComplexField(Field):
         return self.target_info.get(self.DEHYDRATOR_FIELD_NAME, Dehydrator)
 
     @property
-    def fields(self):
-        return self.target_info.get('fields')
+    def specs(self):
+        return self.target_info.get('specs')
