@@ -32,3 +32,14 @@ def test_build_value():
     spec.resolve_target = Mock(return_value='x')
 
     assert spec.build_value(obj=None) == 'x'
+
+
+def test_post_hook():
+    dehydrator = Mock()
+    dehydrator.post_handle_value.return_value = 'IRON_MAN'
+    spec = SimpleSpec(dehydrator=dehydrator, spec=None)
+    spec.resolve_target = Mock(return_value='iron_man')
+
+    obj = None
+    assert spec.build_value(obj) == 'IRON_MAN'
+    dehydrator.post_handle_value.assert_called_once_with(obj)

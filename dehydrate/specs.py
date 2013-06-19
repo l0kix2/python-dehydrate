@@ -114,7 +114,13 @@ class SimpleSpec(Spec):
         return self.target_info
 
     def build_value(self, obj):
-        return self.resolve_target(obj=obj, target_name=self.target)
+        value = self.resolve_target(obj=obj, target_name=self.target)
+
+        post_hook_name = 'post_handle_value'
+        if hasattr(self.dehydrator, post_hook_name):
+            value = getattr(self.dehydrator, post_hook_name)(obj)
+
+        return value
 
 
 @registry.register
