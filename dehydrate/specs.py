@@ -20,7 +20,7 @@ registry = Registry()
 is_string = lambda val: isinstance(val, six.string_types)
 is_dict = lambda val: isinstance(val, Mapping)
 is_iterable = lambda val: isinstance(val, Iterable)
-is_pair = lambda val: not is_dict(val) and is_iterable(val) and len(val) == 2
+is_two_tuple = lambda val: isinstance(val, tuple) and len(val) == 2
 
 
 class Spec(object):
@@ -57,7 +57,7 @@ class Spec(object):
         """
         You should raise SpecParsingError if something goes wrong.
         """
-        if is_pair(self.spec):
+        if is_two_tuple(self.spec):
             target_info, substitution = self.spec
         else:
             target_info = self.spec
@@ -105,7 +105,7 @@ class SimpleSpec(Spec):
     def is_relevant(spec):
         if is_string(spec):
             return True
-        if is_pair(spec) and all(map(is_string, spec)):
+        if is_two_tuple(spec) and all(map(is_string, spec)):
             return True
         return False
 
@@ -128,7 +128,7 @@ class ComplexSpec(Spec):
     def is_relevant(spec):
         if is_dict(spec):
             return True
-        if is_pair(spec) and is_dict(spec[0]) and is_string(spec[1]):
+        if is_two_tuple(spec) and is_dict(spec[0]) and is_string(spec[1]):
             return True
         return False
 
