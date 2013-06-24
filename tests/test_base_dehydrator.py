@@ -61,13 +61,13 @@ def test_wrap_spec_no_relevant(specs_module_mock):
 @patch('dehydrate.base.specs')
 def test_wrap_spec_no_relevant(specs_module_mock):
     spec_cls_1 = Mock(**{'is_relevant.return_value': True})
-    apec_cls_2 = Mock(**{'is_relevant.return_value': False})
+    spec_cls_2 = Mock(**{'is_relevant.return_value': False})
 
-    specs_module_mock.registry = [spec_cls_1, apec_cls_2]
+    specs_module_mock.registry = [spec_cls_1, spec_cls_2]
     dehydrator = Dehydrator()
 
     dehydrator.wrap_spec(spec='spec')
 
     spec_cls_1.is_relevant.assert_called_once_with('spec')
     spec_cls_1.assert_called_once_with(dehydrator=dehydrator, spec='spec')
-    assert apec_cls_2.call_count == 0
+    assert spec_cls_2.call_count == 0
