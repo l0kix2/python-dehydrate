@@ -1,10 +1,13 @@
 # coding: utf-8
-from __future__ import unicode_literals
+from pretend import stub
 
-from dehydrate.exceptions import DehydrationException
+from dehydrate.exceptions import (
+    DehydrationException,
+    TargetResolvingError,
+)
 
 
-def test_dehydration_exception():
+def test_dehydration_exception_init():
     stap = 'Wow-wow-wow, make it stap'
     exc = DehydrationException(
         description=stap,
@@ -14,4 +17,34 @@ def test_dehydration_exception():
     assert hasattr(exc, 'why')
     assert exc.why == 'its failed'
     assert exc.description == stap
-    assert str(exc) == stap
+
+
+def test_exception_str():
+    exc = DehydrationException(description='Some Error')
+    assert str(exc) == 'Some Error'
+
+
+def test_exception_unicode():
+    exc = DehydrationException(description='Some Error')
+    assert unicode(exc) == u'Some Error'
+
+
+def test_exception_repr():
+    exc = DehydrationException(description='Some Error')
+    assert repr(exc) == 'Some Error'
+
+
+def target_resolving_error():
+    person = stub(login='iron_man', full_name=lambda: 'Tony Stark')
+    dehydrator = stub(get_username=lambda x: x)
+
+    DUMMY_TARGET = 'WHATEVER'
+    exc = TargetResolvingError(
+        target=DUMMY_TARGET,
+        obj=person,
+        dehydrator=dehydrator,
+    )
+
+    assert 'login' in exc.object_attributes_string
+    assert 'full_name' in exc.object_methods_string
+    assert 'get_username' in exc.dehydrator_getters_string
