@@ -1,4 +1,6 @@
 # coding: utf-8
+from __future__ import unicode_literals
+
 from pretend import stub
 
 from dehydrate.exceptions import (
@@ -26,7 +28,7 @@ def test_exception_str():
 
 def test_exception_unicode():
     exc = DehydrationException(description='Some Error')
-    assert unicode(exc) == u'Some Error'
+    assert unicode(exc) == 'Some Error'
 
 
 def test_exception_repr():
