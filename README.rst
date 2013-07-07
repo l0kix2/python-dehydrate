@@ -27,7 +27,7 @@ and get mapping with keys based on attribute names and values from them.
 Use ``dehydrate`` shortcut for this case::
 
     >>> from dehydrate import dehydrate
-    >>> from examples import Person
+    >>> from pretend import stub as Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
     >>> dehydrated = dehydrate(obj=iron_man, specs=('first_name', 'login'))
     >>> sorted(dehydrated.items())
@@ -37,15 +37,14 @@ Some notes:
 
 - I use list representation of dict in examples because it has predictable
   order of items in it. It's important, because this pieces of code are tests.
-- In docs I will refer to ``examples`` package, which you can find in repo.
 
 If requested attribute name resolves to method of object, then result of
 calling it will be set in dehydrated dict. In ``Person`` class we have method
 ``full_name``, so let's try to get its return value::
 
     >>> from dehydrate import dehydrate
-    >>> from examples import Person
-    >>> iron_man = Person(first_name='Tony', last_name='Stark')
+    >>> from pretend import stub as Person
+    >>> iron_man = Person(full_name=lambda: 'Tony Stark')
     >>> dehydrated = dehydrate(obj=iron_man, specs=('full_name',))
     >>> sorted(dehydrated.items())
     [('full_name', 'Tony Stark')]
@@ -55,7 +54,7 @@ dict? Just specify both strings in ``specs`` (*spec* can be one object or
 two-tuple)::
 
     >>> from dehydrate import dehydrate
-    >>> from examples import Person
+    >>> from pretend import stub as Person
     >>> iron_man = Person(first_name='Tony', login='iron_man')
     >>> dehydrated = dehydrate(obj=iron_man, specs=(
     ...     ('first_name', 'name'),
@@ -75,7 +74,8 @@ another handling for this element instead. In our example we creating
 special class for this called ``PersonDehydrator`` (inherited from
 ``dehydrate.Dehydrator``) and set some methods on it::
 
-    >>> from examples import Person, PersonDehydrator
+    >>> from pretend import stub as Person
+    >>> from examples import PersonDehydrator
     >>> iron_man = Person(password='iRon42', login='iron_man')
     >>> dehydrated = PersonDehydrator(specs=(
     ...     'password',
@@ -91,20 +91,27 @@ mention, that result of calling ``get_superhero_status`` was set in key
 You can declare ``specs`` using attribute of dehydrator class
 or by passing argument into its ``__init__`` method.
 
+Notes:
+
+- In docs I will refer to ``examples`` package, which you can find in repo.
+
 
 Recursive dehydration
 ---------------------
 The most valuable feature of lib is that you can describe how to recursively
 dehydrate complex fields on object::
 
-    >>> from dehydrate import dehydrate
-    >>> from examples import Person, PersonDehydrator
+    >>> from dehydrate import dehydrate, S
+    >>> from pretend import stub as Person
+    >>> from examples import PersonDehydrator
     >>> octopus = Person(login='octopus')
     >>> spider_man = Person(login='spidey', archenemy=octopus)
     >>> dehydrated = dehydrate(
     ...     specs=(
-    ...         'login',
-    ...         {'target': 'archenemy', 'specs': ('login',)}
+    ...         S('login'),
+    ...         S(target='archenemy', type='nested', specs=(
+    ...             S('login'),
+    ...         )),
     ...     ),
     ...     obj=spider_man
     ... )
@@ -113,13 +120,17 @@ dehydrate complex fields on object::
     >>> list(dehydrated['archenemy'].items())
     [('login', 'octopus')]
 
-Second spec in ``specs`` is so-called ``ComplexSpec``, it described by
-mapping with one required key ``target``, which describes how to get value for
-serialization. Other acceptable keys are:
+You can see, that specs for nested elements are described with use of
+``dehydrate.S`` shortcut (And simple specs as well for the sake of sanity).
+Acceptable arguments are for ``type='nested'``:
 
-- ``dehydrator`` — class, which can be used for dehydrating of complex target.
-- ``specs`` — iterable of same structure as described above.
-- ``iterable`` — flag, which specifies should target be handled as iterable.
+- ``target`` — name, that describes how to get value from object (or use hook
+  on dehydrator)
+- ``dehydrator`` — class, which can be used for dehydrating of complex target
+  (``dehydrate.Dehydrator`` by default).
+- ``specs`` — iterable of same structure as described above (it is optional
+  in case if you describe specs on dehydrator class, but make good sense,
+  if you ant use default ``Dehydrator`` class).
 
 
 Installation
@@ -170,9 +181,7 @@ TODO
 ====
 * Think about giving opportunity to put results in Ordered dict instead of 
   simple dict.
-* Add functionality for converting all values of some type using handlers on
-  dehydrator class.
-* Review tests, because now they not very maintainable. Use sane examples like
-  in readme.
 * Add comprehensive docs about everything.
-* Maybe move complex examples with classes into docs from readme.
+* Move complex examples with classes into docs from readme.
+* Write docstrings and auto-generate some additional docs.
+
