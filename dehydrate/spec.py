@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 
 class Spec(object):
-    # TODO: maybe decorator
     def __init__(self, target, substitution=None, type='simple', **kwargs):
         self.target = target
         self.substitution = substitution
