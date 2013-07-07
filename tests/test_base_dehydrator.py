@@ -38,7 +38,7 @@ def test_inheritor_init():
 @patch('dehydrate.base.Dehydrator.dehydrate_spec')
 def test_dehydrate(dehydrate_spec_mock):
     # TODO: find out how to undecorate function with mock
-    dehydrate_spec_mock.return_value = zip(DUMMY_SPECS, ('Tummy', 10))
+    dehydrate_spec_mock.return_value = list(zip(DUMMY_SPECS, ('Tummy', 10)))
 
     dehydrator = Dehydrator()
     dehydrator.specs = DUMMY_SPECS

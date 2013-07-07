@@ -67,4 +67,4 @@ def test_iterable_apply_dehydrator():
     result = handler.apply_dehydrator(
         dehydrator=dehydrator, target=['iron_man', 'ir0n3000'])  # login/pass
 
-    assert result == ['IRON_MAN', 'IR0N3000']
+    assert list(result) == ['IRON_MAN', 'IR0N3000']
