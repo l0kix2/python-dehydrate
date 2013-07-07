@@ -28,7 +28,8 @@ def test_exception_str():
 
 def test_exception_unicode():
     exc = DehydrationException(description='Some Error')
-    assert unicode(exc) == 'Some Error'
+    # TODO: py3 hacks. mark tests for py2
+    assert exc.__unicode__() == 'Some Error'
 
 
 def test_exception_repr():
