@@ -5,4 +5,4 @@ from .base import Dehydrator
 
 
 def dehydrate(obj, cls=Dehydrator, specs=None):
-    return cls(specs=specs).dehydrate(obj)
+    return cls(specs=specs).dehydrate(obj=obj)

@@ -6,22 +6,57 @@ from mock import Mock
 from dehydrate.shortcuts import dehydrate
 
 
-def test_dehydrate_shortcut_using_given_cls():
-    fake_dehydrator_cls = Mock()
-
-    dehydrate(obj=None, cls=fake_dehydrator_cls)
-
-    fake_dehydrator_cls.assert_called_once_with(specs=None)
+DUMMY_OBJECT = object()
+DUMMY_SPECS = ('name', 'login')  # simplified format
 
 
-def test_dehydrate_shortcut_using_given_obj():
+# some mock helpers for readability
+def get_dehydrator():
     fake_dehydrator_instance = Mock()
-    fake_dehydrator_cls = Mock(**{
-        'return_value': fake_dehydrator_instance
-    })
+    fake_dehydrator_cls = Mock(return_value=fake_dehydrator_instance)
+    return fake_dehydrator_cls, fake_dehydrator_instance
 
-    obj = None
 
-    dehydrate(obj=obj, cls=fake_dehydrator_cls)
+def assert_callable_called(callable, *args, **kwargs):
+    callable.assert_called_once_with(*args, **kwargs)
 
-    fake_dehydrator_instance.dehydrate.assert_called_once_with(obj)
+
+def assert_class_initialized(cls, *args, **kwargs):
+    assert_callable_called(cls, *args, **kwargs)
+
+
+# tests
+def test_dehydrate_shortcut_using_given_cls_without_specs():
+    cls, instance = get_dehydrator()
+
+    dehydrate(obj=DUMMY_OBJECT, cls=cls)
+
+    assert_class_initialized(cls=cls, specs=None)
+    assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
+
+
+def test_dehydrate_shortcut_using_given_cls_with_specs():
+    cls, instance = get_dehydrator()
+
+    dehydrate(obj=DUMMY_OBJECT, cls=cls, specs=DUMMY_SPECS)
+
+    assert_class_initialized(cls=cls, specs=DUMMY_SPECS)
+    assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
+
+
+def test_dehydrate_shortcut_using_given_obj_without_specs():
+    cls, instance = get_dehydrator()
+
+    dehydrate(obj=DUMMY_OBJECT, cls=cls)
+
+    assert_class_initialized(cls=cls, specs=None)
+    assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
+
+
+def test_dehydrate_shortcut_using_given_obj_with_specs():
+    cls, instance = get_dehydrator()
+
+    dehydrate(obj=DUMMY_OBJECT, cls=cls, specs=DUMMY_SPECS)
+
+    assert_class_initialized(cls=cls, specs=DUMMY_SPECS)
+    assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)

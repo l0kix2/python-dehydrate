@@ -1,5 +1,6 @@
 pytest
 pytest-pep8
+pretend
 mock
 coverage
 coveralls

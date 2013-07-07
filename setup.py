@@ -37,7 +37,14 @@ setup(
     description='Small lib for representing python objects as a dicts',
     long_description=readme_text + '\n\n' + changelog_text,
     install_requires=['six'],
-    tests_require=['pytest', 'mock', 'coverage', 'coveralls'],
+    tests_require=[
+        'pytest',
+        'pytest-pep8',
+        'pretend',
+        'mock',
+        'coverage',
+        'coveralls'
+    ],
     cmdclass={'test': PyTest},
     classifiers=[
         'Development Status :: 4 - Beta',
