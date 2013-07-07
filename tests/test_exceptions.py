@@ -11,6 +11,7 @@ def test_dehydration_exception():
         why='its failed',
     )
 
+    assert hasattr(exc, 'why')
     assert exc.why == 'its failed'
     assert exc.description == stap
     assert str(exc) == stap

@@ -19,24 +19,15 @@ def test_register_in_registry_doesnt_change_object():
     registry = helpers.Registry()
     func = lambda x: x
 
-    wrapped_func = registry.register(func)
+    wrapped_obj = registry.register('key')(func)
 
-    assert func is wrapped_func
+    assert func is wrapped_obj
 
 
 def test_registered_object_is_in_registry():
     registry = helpers.Registry()
     func = lambda x: x
 
-    registry.register(func)
+    registry.register('key')(func)
 
-    assert func in registry._registry
-
-
-def test_registry_is_iterable():
-    registry = helpers.Registry()
-    func = lambda x: x
-
-    registry.register(func)
-
-    assert func in registry
+    assert 'key' in registry
