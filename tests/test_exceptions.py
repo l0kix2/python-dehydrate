@@ -48,7 +48,7 @@ def test_description_tpl():
     assert str(exc) == 'Something happened. Look at this spam and 42'
 
 
-def target_resolving_error():
+def test_target_resolving_error():
     person = stub(login='iron_man', full_name=lambda: 'Tony Stark')
     dehydrator = stub(get_username=lambda x: x)
 
