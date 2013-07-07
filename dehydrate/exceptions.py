@@ -30,7 +30,7 @@ class DehydrationException(Exception):
         tpl = self.description_tpl.replace('{', '{self.')
         return tpl.format(self=self)
 
-    __repr__ = str
+    __repr__ = __str__
 
 
 class HandlerNotFound(DehydrationException):
