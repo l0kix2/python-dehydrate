@@ -79,7 +79,7 @@ class NestedHandler(Handler):
 
     @property
     def specs(self):
-        return getattr(self.spec, 'specs')
+        return getattr(self.spec, 'specs', ())
 
 
 @registry.register('iterable')
