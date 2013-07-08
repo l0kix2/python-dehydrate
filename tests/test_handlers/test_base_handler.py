@@ -59,7 +59,7 @@ def test_resolve_target_cant_be_resolved():
     handler.dehydrator = stub(GETTER_PREFIX='get_')
 
     with pytest.raises(DehydrationException):
-        handler.resolve_target(obj=None, target='username')
+        handler.resolve_target(obj=DUMMY_OBJECT, target='username')
 
 
 def test_build_key_if_substitution():

@@ -43,11 +43,19 @@ def test_nested_build_value(
 
     dehydrator_cls_mock.return_value = DUMMY_DEHYDRATOR
 
-    handler.build_value(obj=None)
+    handler.build_value(obj=DUMMY_OBJECT)
 
     dehydrator_cls_mock.assert_called_once_with(specs=DUMMY_SPECS)
     apply_dehydrator_mock.assert_called_once_with(
         DUMMY_DEHYDRATOR, DUMMY_TARGET)
+
+
+def test_nested_build_value_if_none():
+    handler = NestedHandler(dehydrator=DUMMY_OBJECT, spec=DUMMY_SPEC)
+
+    value = handler.build_value(obj=None)
+
+    assert value is None
 
 
 def test_nested_apply_dehydrator():
