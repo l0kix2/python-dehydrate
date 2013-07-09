@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from .exceptions import UnknownSpecFormat, HandlerNotFound
-from .helpers import wrap_in_dict, is_string, is_two_str_tuple
+from .helpers import is_string, is_two_str_tuple
 from .spec import S
 from . import handlers
 
@@ -16,20 +16,14 @@ class Dehydrator(object):
     def __init__(self, specs=None):
         self.specs = specs or self.specs or ()
 
-    @wrap_in_dict
     def dehydrate(self, obj):
         if obj is None:
-            return self.handle_none()
+            return None
 
-        for spec in self.specs:
-            yield self.dehydrate_spec(obj, spec)
-
-    def handle_none():
-        """
-        Hook for specifying behaviour when object is None.
-        # TODO: Not really customizable?
-        """
-        return None   
+        return dict(
+            self.dehydrate_spec(obj, spec)
+            for spec in self.specs
+        )
 
     def dehydrate_spec(self, obj, spec):
         spec = self.wrap_spec_if_needed(spec)
