@@ -50,14 +50,6 @@ def test_nested_build_value(
         DUMMY_DEHYDRATOR, DUMMY_TARGET)
 
 
-def test_nested_build_value_if_none():
-    handler = NestedHandler(dehydrator=DUMMY_OBJECT, spec=DUMMY_SPEC)
-
-    value = handler.build_value(obj=None)
-
-    assert value is None
-
-
 def test_nested_apply_dehydrator():
     handler = NestedHandler(dehydrator=DUMMY_OBJECT, spec=DUMMY_SPEC)
 
