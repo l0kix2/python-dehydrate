@@ -63,10 +63,6 @@ class SimpleHandler(Handler):
 class NestedHandler(Handler):
 
     def build_value(self, obj):
-        if obj is None:
-            # Think about customizing ability in this place.
-            return None
-
         target = self.resolve_target(obj=obj, target=self.target)
 
         dehydrator = self.dehydrator_cls(specs=self.specs)
