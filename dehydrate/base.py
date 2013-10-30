@@ -12,13 +12,18 @@ class Dehydrator(object):
     GETTER_PREFIX = 'get_'
 
     specs = None
+    empty = None
 
-    def __init__(self, specs=None):
+    def __init__(self, specs=None, empty=None):
         self.specs = specs or self.specs or ()
+        self.empty = empty or self.empty or None
 
     def dehydrate(self, obj):
         if obj is None:
-            return None
+            if callable(self.empty):
+                return self.empty(obj)
+            else:
+                return self.empty
 
         return dict(
             self.dehydrate_spec(obj, spec)

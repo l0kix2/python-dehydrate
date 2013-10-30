@@ -38,7 +38,7 @@ setup(
     long_description=readme_text + '\n\n' + changelog_text,
     install_requires=['six'],
     tests_require=[
-        'pytest',
+        'pytest>=2.4.2',
         'pytest-pep8',
         'pretend',
         'mock',
