@@ -120,3 +120,25 @@ def test_select_handler_not_found_in_registry(handlers_module):
 
     with raises(DehydrationException):
         dehydrator.select_handler(spec=spec)
+
+
+def test_dehydrate_none():
+    dehydrator = Dehydrator(specs=DUMMY_SPECS)
+    result = dehydrator.dehydrate(None)
+    assert result is None
+
+
+def test_dehydrate_none_with_fallback():
+    fallback_object = object()
+    dehydrator = Dehydrator(specs=DUMMY_SPECS, empty=fallback_object)
+    result = dehydrator.dehydrate(None)
+    assert result is fallback_object
+
+
+def test_dehydrate_none_with_fallback_factory():
+    fallback = lambda obj: {'id': '', 'name': ''}
+    dehydrator = Dehydrator(specs=DUMMY_SPECS, empty=fallback)
+    result1 = dehydrator.dehydrate(None)
+    result2 = dehydrator.dehydrate(None)
+    assert result1 == result2 == {'id': '', 'name': ''}
+    assert result1 is not result2
