@@ -31,7 +31,7 @@ def test_dehydrate_shortcut_using_given_cls_without_specs():
 
     dehydrate(obj=DUMMY_OBJECT, cls=cls)
 
-    assert_class_initialized(cls=cls, specs=None)
+    assert_class_initialized(cls=cls, specs=None, empty=None)
     assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
 
 
@@ -40,7 +40,7 @@ def test_dehydrate_shortcut_using_given_cls_with_specs():
 
     dehydrate(obj=DUMMY_OBJECT, cls=cls, specs=DUMMY_SPECS)
 
-    assert_class_initialized(cls=cls, specs=DUMMY_SPECS)
+    assert_class_initialized(cls=cls, specs=DUMMY_SPECS, empty=None)
     assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
 
 
@@ -49,7 +49,7 @@ def test_dehydrate_shortcut_using_given_obj_without_specs():
 
     dehydrate(obj=DUMMY_OBJECT, cls=cls)
 
-    assert_class_initialized(cls=cls, specs=None)
+    assert_class_initialized(cls=cls, specs=None, empty=None)
     assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
 
 
@@ -58,5 +58,5 @@ def test_dehydrate_shortcut_using_given_obj_with_specs():
 
     dehydrate(obj=DUMMY_OBJECT, cls=cls, specs=DUMMY_SPECS)
 
-    assert_class_initialized(cls=cls, specs=DUMMY_SPECS)
+    assert_class_initialized(cls=cls, specs=DUMMY_SPECS, empty=None)
     assert_callable_called(callable=instance.dehydrate, obj=DUMMY_OBJECT)
