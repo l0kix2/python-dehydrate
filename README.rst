@@ -1,7 +1,7 @@
 python-dehydrate
 ================
-.. image:: https://travis-ci.org/l0kix2/python-dehydrate.png?branch=master
-    :target: https://travis-ci.org/l0kix2/python-dehydrate?branch=master
+.. image:: https://travis-ci.org/l0kix2/catcher.svg?branch=master
+    :target: https://travis-ci.org/l0kix2/catcher
 
 .. image:: https://coveralls.io/repos/l0kix2/python-dehydrate/badge.png?branch=master
     :target: https://coveralls.io/r/l0kix2/python-dehydrate?branch=master
